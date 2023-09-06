@@ -4,23 +4,19 @@ import java.util.Date;
 
 
 @Entity
+@SequenceGenerator(
+        name = "member_seq_generator",
+        sequenceName = "member_seq"
+        initialValue = 1, allocationSize = 50) //계속 호출하기보단 미리 50개의 사이즈를 db에 올려놓고 메모리상에서 1씩쓴다. -> 동시성 이슈 없이 해결 가능
 public class Member {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
     private Long id;
     @Column(name = "name", nullable = false)
     private String username;
-    private Integer age;
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-    @Lob
-    private String description;
-    //Getter, Setter…
-    @Transient
-    private int temp;
+    public Member() {
+
+    }
 
     public Long getId() {
         return id;
@@ -36,54 +32,6 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public RoleType getRoleType() {
-        return roleType;
-    }
-
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getTemp() {
-        return temp;
-    }
-
-    public void setTemp(int temp) {
-        this.temp = temp;
     }
 }
 
