@@ -15,16 +15,19 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);//회원 저장
 
             Member member = new Member();
-            member.setUsername("C");
-
-            System.out.println("===============");
-
-
+            member.setUsername("member1");
+            member.setTeam(team);
             em.persist(member);
-            System.out.println("member.id = " + member.getId());
-            System.out.println("===============");
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam = " + findTeam.getName());
 
             tx.commit();
         } catch (Exception e) {

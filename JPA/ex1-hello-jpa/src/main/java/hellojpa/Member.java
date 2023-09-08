@@ -2,21 +2,22 @@ package hellojpa;
 import javax.persistence.*;
 import java.util.Date;
 
-
 @Entity
-@SequenceGenerator(
-        name = "member_seq_generator",
-        sequenceName = "member_seq"
-        initialValue = 1, allocationSize = 50) //계속 호출하기보단 미리 50개의 사이즈를 db에 올려놓고 메모리상에서 1씩쓴다. -> 동시성 이슈 없이 해결 가능
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
-    private Long id;
-    @Column(name = "name", nullable = false)
-    private String username;
-    public Member() {
 
-    }
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
+    private  Long id;
+
+    @Column(name= "USERNAME")
+    private String username;
+
+    //@Column(name = "TEAM_ID")
+    //private Long teamId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Long getId() {
         return id;
@@ -32,6 +33,14 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
 
