@@ -9,9 +9,10 @@ public class Team {
     @Column(name = "TEAM_ID")
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "team")
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")
     private List<Member> members = new ArrayList<>();
-    // arrayllist로 초기화 : add 할때 nullpoint로 에러가 뜨지 않는다
+
 
     public Long getId() {
         return id;
